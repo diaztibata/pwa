@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD con Datos Locales</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        ul {
+            padding-left: 0;
+        }
+        li {
+            list-style: none;
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: space-between;
+        }
+        button {
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        .btn-edit {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .btn-delete {
+            background-color: #f44336;
+            color: white;
+        }
+        #newItemInput {
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Aplicación CRUD con Datos Locales</h1>
+
+<h3>Agregar un nuevo elemento:</h3>
+<input type="text" id="newItemInput" placeholder="Nuevo elemento" />
+<button id="addItemBtn">Agregar</button>
+
+<h3>Lista de Elementos:</h3>
+<ul id="itemsList"></ul>
+
+<script>
+// Array de datos locales
+let items = [
+    { id: 1, name: 'Elemento 1' },
+    { id: 2, name: 'Elemento 2' },
+    { id: 3, name: 'Elemento 3' }
+];
+
+// Función para mostrar los elementos
+function displayItems() {
+    const list = document.getElementById('itemsList');
+    list.innerHTML = ''; // Limpiar la lista antes de mostrarla
+
+    items.forEach(item => {
+        const li = document.createElement('li');
+        li.innerHTML = `${item.name} 
+            <button class="btn-edit" onclick="editItem(${item.id})">Modificar</button>
+            <button class="btn-delete" onclick="deleteItem(${item.id})">Eliminar</button>`;
+        list.appendChild(li);
+    });
+}
+
+// Función para agregar un nuevo elemento
+document.getElementById('addItemBtn').addEventListener('click', () => {
+    const newItemInput = document.getElementById('newItemInput');
+    const newItemName = newItemInput.value.trim();
+    if (newItemName) {
+        const newItem = { id: Date.now(), name: newItemName };
+        items.push(newItem);
+        newItemInput.value = ''; // Limpiar el input
+        displayItems(); // Volver a mostrar los elementos
+    } else {
+        alert('Por favor, ingresa un nombre para el nuevo elemento.');
+    }
+});
+
+// Función para editar un elemento
+function editItem(id) {
+    const newName = prompt('Editar nombre:', getItemById(id).name);
+    if (newName) {
+        const item = getItemById(id);
+        item.name = newName;
+        displayItems(); // Volver a mostrar los elementos
+    }
+}
+
+// Función para eliminar un elemento
+function deleteItem(id) {
+    if (confirm('¿Estás seguro de que quieres eliminar este elemento?')) {
+        items = items.filter(item => item.id !== id);
+        displayItems(); // Volver a mostrar los elementos
+    }
+}
+
+// Obtener un elemento por su ID
+function getItemById(id) {
+    return items.find(item => item.id === id);
+}
+
+// Mostrar los elementos cuando se carga la página
+displayItems();
+
+</script>
+
+</body>
+</html>
