@@ -41,7 +41,7 @@
 <body>
 
 <h1>Aplicación CRUD con Datos Locales</h1>
-
+<button id="enableNotificationsBtn">permitir</button>
 <h3>Agregar un nuevo elemento:</h3>
 <input type="text" id="newItemInput" placeholder="Nuevo elemento" />
 <button id="addItemBtn">Agregar</button>
@@ -124,6 +124,23 @@ displayItems();
         });
     });
   }
+</script>
+
+<script>
+
+    // Solicitar permiso para mostrar notificaciones
+if ('Notification' in window) {
+  document.getElementById('enableNotificationsBtn').addEventListener('click', () => {
+    Notification.requestPermission().then((permission) => {
+      if (permission === 'granted') {
+        console.log('Permiso para notificaciones concedido');
+      } else {
+        console.log('Permiso para notificaciones denegado');
+      }
+    });
+  });
+}
+
 </script>
 </body>
 </html>
