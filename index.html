@@ -1,167 +1,34 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CRUD con Datos Locales</title>
-    <link rel="manifest" href="/pwa/manifest.json">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            padding: 20px;
-        }
-        ul {
-            padding-left: 0;
-        }
-        li {
-            list-style: none;
-            margin: 10px 0;
-            padding: 10px;
-            background-color: #f4f4f4;
-            display: flex;
-            justify-content: space-between;
-        }
-        button {
-            padding: 5px 10px;
-            cursor: pointer;
-        }
-        .btn-edit {
-            background-color: #4CAF50;
-            color: white;
-        }
-        .btn-delete {
-            background-color: #f44336;
-            color: white;
-        }
-        #newItemInput {
-            padding: 5px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PWA con Notificaciones</title>
+  <link rel="manifest" href="/pwa/manifest.json"> <!-- Vincula el manifest.json -->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
+  <h1>Mi PWA con Notificaciones</h1>
 
-<h1>Aplicación CRUD con Datos Locales</h1>
-<button id="enableNotificationsBtn">permitir</button>
-    <button id="showNotificationBtn">Mostrar notificación</button>
+  <p>
+    Esta es una aplicación PWA que muestra notificaciones locales. Haz clic en los botones a continuación.
+  </p>
 
-<h3>Agregar un nuevo elemento:</h3>
-<input type="text" id="newItemInput" placeholder="Nuevo elemento" />
-<button id="addItemBtn">Agregar</button>
+  <!-- Botones para habilitar notificaciones y mostrar una notificación -->
+  <button id="enableNotificationsBtn">Habilitar notificaciones</button>
+  <button id="showNotificationBtn">Mostrar notificación</button>
 
-<h3>Lista de Elementos:</h3>
-<ul id="itemsList"></ul>
-
-<script>
-// Array de datos locales
-let items = [
-    { id: 1, name: 'Elemento 1' },
-    { id: 2, name: 'Elemento 2' },
-    { id: 3, name: 'Elemento 3' }
-];
-
-// Función para mostrar los elementos
-function displayItems() {
-    const list = document.getElementById('itemsList');
-    list.innerHTML = ''; // Limpiar la lista antes de mostrarla
-
-    items.forEach(item => {
-        const li = document.createElement('li');
-        li.innerHTML = `${item.name} 
-            <button class="btn-edit" onclick="editItem(${item.id})">Modificar</button>
-            <button class="btn-delete" onclick="deleteItem(${item.id})">Eliminar</button>`;
-        list.appendChild(li);
-    });
-}
-
-// Función para agregar un nuevo elemento
-document.getElementById('addItemBtn').addEventListener('click', () => {
-    const newItemInput = document.getElementById('newItemInput');
-    const newItemName = newItemInput.value.trim();
-    if (newItemName) {
-        const newItem = { id: Date.now(), name: newItemName };
-        items.push(newItem);
-        newItemInput.value = ''; // Limpiar el input
-        displayItems(); // Volver a mostrar los elementos
-    } else {
-        alert('Por favor, ingresa un nombre para el nuevo elemento.');
-    }
-});
-
-// Función para editar un elemento
-function editItem(id) {
-    const newName = prompt('Editar nombre:', getItemById(id).name);
-    if (newName) {
-        const item = getItemById(id);
-        item.name = newName;
-        displayItems(); // Volver a mostrar los elementos
-    }
-}
-
-// Función para eliminar un elemento
-function deleteItem(id) {
-    if (confirm('¿Estás seguro de que quieres eliminar este elemento?')) {
-        items = items.filter(item => item.id !== id);
-        displayItems(); // Volver a mostrar los elementos
-    }
-}
-
-// Obtener un elemento por su ID
-function getItemById(id) {
-    return items.find(item => item.id === id);
-}
-
-// Mostrar los elementos cuando se carga la página
-displayItems();
-
-</script>
-<script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/pwa/service-worker.js')
-        .then((registration) => {
-          console.log('Service Worker registrado con éxito:', registration);
-        })
-        .catch((error) => {
-          console.log('Error al registrar el Service Worker:', error);
-        });
-    });
-  }
-</script>
-
-<script>
-
-    // Solicitar permiso para mostrar notificaciones
-if ('Notification' in window) {
-  document.getElementById('enableNotificationsBtn').addEventListener('click', () => {
-    Notification.requestPermission().then((permission) => {
-      if (permission === 'granted') {
-        console.log('Permiso para notificaciones concedido');
-      } else {
-        console.log('Permiso para notificaciones denegado');
-      }
-    });
-  });
-}
-
-
-    // Función para mostrar una notificación simple
-function showNotification() {
-  if (Notification.permission === 'granted') {
-    new Notification('¡Hola!', {
-      body: 'Esta es una notificación local.',
-      icon: 'icons/icon-192x192.png', // Asegúrate de tener este icono
-    });
-  } else {
-    console.log('Permiso para notificaciones no concedido');
-  }
-}
-
-// Llamar a la función cuando se desee mostrar la notificación
-document.getElementById('showNotificationBtn').addEventListener('click', showNotification);
-
-
-</script>
-
-    
+  <script src="/pwa/app.js"></script>
 </body>
 </html>
