@@ -49,3 +49,17 @@ self.addEventListener('fetch', (event) => {
       })
   );
 });
+
+
+self.addEventListener('push', (event) => {
+  const options = {
+    body: event.data ? event.data.text() : '¡Tienes una nueva notificación!',
+    icon: 'icons/icon-192x192.png',
+    badge: 'icons/icon-192x192.png',
+  };
+
+  event.waitUntil(
+    self.registration.showNotification('Notificación Push', options)
+  );
+});
+
