@@ -1,7 +1,7 @@
 {
-  "name": "CRUD con Datos Locales",
-  "short_name": "CRUD PWA",
-  "description": "Una aplicación CRUD simple con almacenamiento local",
+  "name": "PWA con Notificaciones",
+  "short_name": "PWA Notificaciones",
+  "description": "Una aplicación PWA que muestra notificaciones locales.",
   "start_url": "/pwa",
   "display": "standalone",
   "background_color": "#ffffff",
