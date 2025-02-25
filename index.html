@@ -42,6 +42,8 @@
 
 <h1>Aplicación CRUD con Datos Locales</h1>
 <button id="enableNotificationsBtn">permitir</button>
+    <button id="showNotificationBtn">Mostrar notificación</button>
+
 <h3>Agregar un nuevo elemento:</h3>
 <input type="text" id="newItemInput" placeholder="Nuevo elemento" />
 <button id="addItemBtn">Agregar</button>
@@ -141,6 +143,25 @@ if ('Notification' in window) {
   });
 }
 
+
+    // Función para mostrar una notificación simple
+function showNotification() {
+  if (Notification.permission === 'granted') {
+    new Notification('¡Hola!', {
+      body: 'Esta es una notificación local.',
+      icon: 'icons/icon-192x192.png', // Asegúrate de tener este icono
+    });
+  } else {
+    console.log('Permiso para notificaciones no concedido');
+  }
+}
+
+// Llamar a la función cuando se desee mostrar la notificación
+document.getElementById('showNotificationBtn').addEventListener('click', showNotification);
+
+
 </script>
+
+    
 </body>
 </html>
