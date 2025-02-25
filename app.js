@@ -34,7 +34,7 @@ if ('Notification' in window) {
 // Registrar el Service Worker para manejar notificaciones en segundo plano
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/service-worker.js')
+    navigator.serviceWorker.register('/pwa/service-worker.js')
       .then((registration) => {
         console.log('Service Worker registrado con éxito:', registration);
       })
